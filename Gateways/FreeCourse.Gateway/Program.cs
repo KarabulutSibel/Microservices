@@ -1,7 +1,10 @@
+using FreeCourse.Gateway.DelegateHandlers;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddHttpClient<TokenExchangeDelegateHandler>();
 
 builder.Services.AddAuthentication().AddJwtBearer("GatewayAuthenticationScheme", options => 
 {
@@ -17,7 +20,7 @@ builder.Configuration
 	.AddJsonFile($"configuration.{builder.Environment.EnvironmentName}.json")
 	.AddEnvironmentVariables();
 
-builder.Services.AddOcelot();
+builder.Services.AddOcelot().AddDelegatingHandler<TokenExchangeDelegateHandler>();
 
 var app = builder.Build();
 

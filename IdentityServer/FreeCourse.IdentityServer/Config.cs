@@ -49,25 +49,34 @@ namespace FreeCourse.IdentityServer
 			{
 				new Client
 				{
-					ClientName= "Asp.Net Core MVC",
-					ClientId= "WebMvcClient",
-					ClientSecrets={ new Secret("secret".Sha256())},
+					ClientName = "Asp.Net Core MVC",
+					ClientId = "WebMvcClient",
+					ClientSecrets = { new Secret("secret".Sha256())},
 					AllowedGrantTypes=GrantTypes.ClientCredentials,
-					AllowedScopes={ "catalog_fullpermission","photo_stock_fullpermission", "gateway_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
+					AllowedScopes = { "catalog_fullpermission","photo_stock_fullpermission", "gateway_fullpermission", IdentityServerConstants.LocalApi.ScopeName }
 				},
 
 				new Client
 				{
 					ClientName = "Asp.Net Core MVC",
 					ClientId = "WebMvcClientForUser",
-					AllowOfflineAccess=true,
+					AllowOfflineAccess = true,
 					ClientSecrets = {new Secret("secret".Sha256())},
 					AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
-					AllowedScopes ={ "basket_fullpermission", "discount_fullpermission", "order_fullpermission", "payment_fullpermission", "gateway_fullpermission", IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles" },
+					AllowedScopes = { "basket_fullpermission", "order_fullpermission", "gateway_fullpermission", IdentityServerConstants.StandardScopes.Email,IdentityServerConstants.StandardScopes.OpenId,IdentityServerConstants.StandardScopes.Profile, IdentityServerConstants.StandardScopes.OfflineAccess, IdentityServerConstants.LocalApi.ScopeName,"roles" },
 					AccessTokenLifetime=1*60*60,
 					RefreshTokenExpiration=TokenExpiration.Absolute,
 					AbsoluteRefreshTokenLifetime=(int)(DateTime.Now.AddDays(60)-DateTime.Now).TotalSeconds,
 					RefreshTokenUsage=TokenUsage.ReUse
+				},
+
+				new Client
+				{
+					ClientName = "Token Exchange Client",
+					ClientId = "TokenExchangeClient",
+					ClientSecrets = { new Secret("secret".Sha256())},
+					AllowedGrantTypes = new [] {"urn:ietf:params:oauth:grant-type:token-exchange" },
+					AllowedScopes = { "discount_fullpermission", "payment_fullpermission", IdentityServerConstants.StandardScopes.OpenId }
 				}
 			};
 	}
